@@ -1,3 +1,5 @@
+![Simulator Screen Shot - iPhone 12 - 2021-09-07 at 11 36 32](https://user-images.githubusercontent.com/77860839/132372661-ba18f19a-e8d5-4bf7-8149-618a93c31e85.png)
+![Simulator Screen Shot - iPhone 12 - 2021-09-07 at 11 26 27](https://user-images.githubusercontent.com/77860839/132372728-2c488b48-8bb4-4d67-8354-233a8531dc04.png)
 # Glow-Weather
  Weather & air quality application created with a glow theme. This weather app uses API's from openweathermap.org, and does not require the current location of the user.
 
