@@ -14,12 +14,15 @@ struct ContactInfo: View {
             LinearGradient(gradient: Gradient(colors: [Color(.blue), Color(.systemOrange)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     .opacity(0.85)
                     .ignoresSafeArea()
-            ScrollView(.vertical, showsIndicators: false) {
+            VStack {
+//            ScrollView(.vertical, showsIndicators: false) {
                 Text("Contact")
                     .font(.system(size: 55, weight: .semibold, design: .monospaced))
                     .foregroundColor(.white)
                     .shadow(color: .gray, radius: 45)
                     .padding()
+            ScrollView(.vertical, showsIndicators: false) {
+                Spacer(minLength: 25)
             ZStack {
                                 
                 RoundedRectangle(cornerRadius: 69)
@@ -54,42 +57,14 @@ struct ContactInfo: View {
             .padding(0.2)
             .padding([.leading, .trailing])
             }
-        }.frame(minWidth: 0, idealWidth: .infinity, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: 60, maxHeight: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    .padding(.horizontal)
-                
+        }.padding(.horizontal)
+            }
+//        }.frame(minWidth: 0, idealWidth: .infinity, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: 60, maxHeight: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//                    .padding(.horizontal)
                         }
                    }
-                    
                 }
         }
-//        ZStack {
-//            LinearGradient(gradient: Gradient(colors: [Color(.blue), Color(.systemOrange)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-//                .opacity(0.85)
-//                .ignoresSafeArea()
-//            ScrollView {
-//        VStack {
-//            Text("Contact")
-//                .font(.system(size: 55, weight: .semibold, design: .monospaced))
-//                .foregroundColor(.white)
-//                .shadow(color: .gray, radius: 45)
-//                .padding()
-//        Text("officialnatelee@gmail.com")
-//            .foregroundColor(.white)
-//            .font(.system(size: 20, weight: .regular, design: .monospaced))
-//            .multilineTextAlignment(.center)
-//            .shadow(color: .black, radius: 15)
-//            .padding()
-//            Text("twitter: @natexlee")
-//                .foregroundColor(.white)
-//                .font(.system(size: 20, weight: .regular, design: .monospaced))
-//                .multilineTextAlignment(.center)
-//                .shadow(color: .black, radius: 15)
-//                .padding()
-//
-//            Spacer()
-//                }
-//            }
-//        }
     }
 
 

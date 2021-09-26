@@ -10,12 +10,6 @@ import Foundation
 
 class nameViewModel: ObservableObject {
     @Published var nameSearchResponse: searchResponse?
-    //var rx = searchResponse.init(location: Location, current: Current, forecast: Forecasts)
-    //@Published var hourlyTemp: [Double] = nameSearchResponse?.forecast?.forecastday[0]?.hour[0...23]?.temp_f
-    
-    
-   
-    
     
     var name: String {
         guard let name = nameSearchResponse?.location?.name  else {
@@ -274,48 +268,6 @@ class nameViewModel: ObservableObject {
             return 0
         }
         return chanceOfSnow1
-    }
-    
-    var minTemp2: Double {
-        guard let minTemp2 = nameSearchResponse?.forecast?.forecastday?[2].day?.mintemp_f else {
-            return 0.0
-        }
-        return minTemp2
-    }
-    
-    var maxTemp2: Double {
-        guard let maxTemp2 = nameSearchResponse?.forecast?.forecastday?[2].day?.maxtemp_f else {
-            return 0.0
-        }
-        return maxTemp2
-    }
-    
-    var code2: Int {
-        guard let code2 = nameSearchResponse?.forecast?.forecastday?[2].hour?[12].condition?.code else {
-            return 0
-        }
-        return code2
-    }
-    
-    var minTemp3: Double {
-        guard let minTemp3 = nameSearchResponse?.forecast?.forecastday?[3].day?.mintemp_f else {
-            return 0.0
-        }
-        return minTemp3
-    }
-
-    var maxTemp3: Double {
-        guard let maxTemp3 = nameSearchResponse?.forecast?.forecastday?[3].day?.maxtemp_f else {
-            return 0.0
-        }
-        return maxTemp3
-    }
-
-    var code3: Int {
-        guard let code3 = nameSearchResponse?.forecast?.forecastday?[3].hour?[12].condition?.code else {
-            return 0
-        }
-        return code3
     }
     
     func fetchData(cityInput: String) {

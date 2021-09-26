@@ -40,12 +40,6 @@ struct AboutTheApp: View {
                                         }
                         }.frame(minWidth: 0, idealWidth: .infinity, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: 60, maxHeight: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                             .padding(.horizontal)
-//                Text("This app provides current weather and air quality information. Stay tuned for more features...")
-//                    .foregroundColor(.white)
-//                    .font(.system(size: 25, weight: .regular, design: .monospaced))
-//                    .multilineTextAlignment(.center)
-//                    .shadow(color: .black, radius: 15)
-//                    .padding()
                     }
                 }
                 Text("Data provided by weatherapi.com")

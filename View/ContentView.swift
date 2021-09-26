@@ -12,9 +12,7 @@ import SwiftUI
         struct ContentView: View {
             @State var name = "Glowcast"
             @State var selected = "Current"
-            //@State var current = CurrentWeather()
             @ObservedObject var nameResponse = nameViewModel()
-            @ObservedObject var locationSearch = locationSearchViewModel()
             @ObservedObject var sharedUserInput = SharedUserInput(userUnit: 1, observedCityName: "", clName: "")
             
             var body: some View {
@@ -41,13 +39,15 @@ import SwiftUI
             var body: some View {
                
                 
-                
+                ZStack {
+                    LinearGradient(gradient: Gradient(colors: [Color(.blue), Color(.systemOrange)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                        .opacity(0.85)
+                        .ignoresSafeArea()
             VStack(spacing: 0) {
         TabView(selection: $selected){
             CurrentWeather()
                 .tag(tabItems[0])
                 .ignoresSafeArea(.all, edges: .top)
-                //.animation(.easeInOut(duration: 0.45))
             Forecast()
                 .tag(tabItems[1])
                 .ignoresSafeArea(.all, edges: .top)
@@ -55,6 +55,7 @@ import SwiftUI
                 .tag(tabItems[2])
                 .ignoresSafeArea(.all, edges: .top)
                     }
+            
                 // Custom TabBar
                 
                 HStack(spacing: 0){
@@ -86,6 +87,7 @@ import SwiftUI
                 .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: -5 )
                 .padding(.top,-15)
             }.ignoresSafeArea(.all, edges: .bottom)
+            }
             }
         }
 

@@ -14,7 +14,6 @@ class LocationManager: NSObject, ObservableObject {
     static let shared = LocationManager()
     @Published var cityLocal = ""
     @Published var twoD = CLLocationCoordinate2D()
-    //@Published var postalCode = ""
     
     override init() {
         super.init()
@@ -52,45 +51,16 @@ extension LocationManager: CLLocationManagerDelegate {
         func getCityName(of location: CLLocation) {
             CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
                 if let placemark = placemarks?.first {
-                    //self.cityLocal = "\(placemark.locality ?? "") \(placemark.country ?? "")"
                     self.cityLocal = "\(placemark.locality ?? "")"
-                    //self.postalCode = placemark.postalCode!
                 }
             }
         }
-        
-        
-//        //Get zip code
-//        func getPostal(of location: CLLocation) {
-//            CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
-//                if let placemark = placemarks?.first {
-//                    //self.cityLocal = "\(placemark.locality ?? "") \(placemark.country ?? "")"
-//                    self.postalCode = "\(placemark.postalCode ?? "")"
-//                }
-//            }
-//        }
-
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         self.userLocation = location
     }
-    
-    
-    
-   
 }
 
 

@@ -15,14 +15,14 @@ struct Settings: View {
                     LinearGradient(gradient: Gradient(colors: [Color(.blue), Color(.systemOrange)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                         .opacity(0.85)
                         .ignoresSafeArea()
-        VStack {
+                    VStack(alignment: .center) {
             Text("Settings")
                 .font(.system(size: 55, weight: .heavy, design: .monospaced))
                 .foregroundColor(.white)
                 .shadow(color: .gray, radius: 45)
                 .padding()
-            //Spacer(minLength: 100)
-            //VStack {
+                        ScrollView(.vertical, showsIndicators: false) {
+                            Spacer(minLength: 25)
                     NavigationLink(
                         destination: AboutTheApp(),
                         label: {
@@ -71,13 +71,14 @@ struct Settings: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 40)
                         .foregroundColor(.black)
-                        .opacity(0.3)
+                        .opacity(0.6)
                         .shadow(color: .black, radius: 15)
                 VStack {
                     Text("Temp Unit")
                         .font(.system(size: 30, weight: .semibold, design: .monospaced))
                         .foregroundColor(.white)
                         .shadow(color: .black, radius: 15)
+                        .padding(.top)
                 HStack {
                     Text("")
                         .padding()
@@ -89,23 +90,17 @@ struct Settings: View {
                     
                     .pickerStyle(SegmentedPickerStyle())
                     .shadow(color: .blue, radius: 10)
-                }
+                }.padding(.bottom)
                     Text("")
                         .padding()
             }
                 }
                 }.padding()
                 .padding(.bottom, 60)
-                
+                        }.opacity(0.85)
         }
-//            }.frame(minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealWidth: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
-//                .padding(.bottom, 150)
              Spacer()
         }
-        
-                    
-                //}
-              
             }
         }
     }

@@ -13,13 +13,16 @@ struct AboutAirQuality: View {
             LinearGradient(gradient: Gradient(colors: [Color(.blue), Color(.systemOrange)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .opacity(0.85)
                 .ignoresSafeArea()
-            ScrollView(.vertical, showsIndicators: false) {
+//            ScrollView(.vertical, showsIndicators: false) {
+            VStack(alignment: .center) {
             Text("Air Quality")
                 .font(.system(size: 55, weight: .semibold, design: .monospaced))
                 .foregroundColor(.white)
                 .shadow(color: .white, radius: 45)
                 .padding()
-                VStack(alignment: .leading) {
+            ScrollView(.vertical, showsIndicators: false) {
+                Spacer(minLength: 25)
+//                VStack(alignment: .leading) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 38.0)
                             .foregroundColor(Color(.black))
@@ -88,8 +91,8 @@ struct AboutAirQuality: View {
                         }
                     }
             Spacer()
-                }.padding()
-            }
+            }.padding(.horizontal)
+            }.foregroundColor(.clear)
         }
     }
 }
