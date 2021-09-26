@@ -351,7 +351,7 @@ struct Forecast: View {
                             .renderingMode(.original)
                             .font(.system(size: 170))
                             .foregroundColor(Color.white)
-                            .shadow(color: .gray, radius: 85)
+                            .shadow(color: .black, radius: 40)
                             .padding(.trailing, 6)
                 Text("Today's Forecast")
             .foregroundColor(.white)
@@ -431,7 +431,7 @@ struct Forecast: View {
                                 .renderingMode(.original)
                                 .font(.system(size: 170))
                                 .foregroundColor(Color.white)
-                                .shadow(color: .gray, radius: 85)
+//                                .shadow(color: .black, radius: 40)
                                 .padding(.trailing, 6)
                             ZStack {
                                 RoundedRectangle(cornerRadius: 38.0)
@@ -523,13 +523,13 @@ struct Forecast: View {
                             .renderingMode(.original)
                             .font(.system(size: 170))
                             .foregroundColor(Color.white)
-                            .shadow(color: .gray, radius: 85)
+                            .shadow(color: .black, radius: 45)
                             .padding(.trailing, 6)
-                Text("Today's Forecast")
+                Text("Today")
             .foregroundColor(.white)
-            .font(.system(size: 27, weight: .semibold, design: .monospaced))
+            .font(.system(size: 35, weight: .bold, design: .monospaced))
             .multilineTextAlignment(.center)
-            .shadow(color: .black, radius: 30)
+            .shadow(color: .black, radius: 12)
             .padding(.top)
             .padding(.horizontal)
                     //ScrollView(.vertical, showsIndicators: false) {
@@ -537,7 +537,7 @@ struct Forecast: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 38.0)
                                 .foregroundColor(Color(.black))
-                                .opacity(0.2)
+                                .opacity(0.3)
                                 .shadow(color: Color(.gray), radius: 18)
                             Text("Min: \(Int((nameResponse.minTemp + tempConvert1) * tempConvert2))º Max: \(Int((nameResponse.maxTemp + tempConvert1) * tempConvert2))º")
                             .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -548,7 +548,7 @@ struct Forecast: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 38.0)
                                     .foregroundColor(Color(.black))
-                                    .opacity(0.2)
+                                    .opacity(0.3)
                                     .shadow(color: Color(.gray), radius: 18)
                                 Text("Average Temp: \(Int((nameResponse.avgTemp + tempConvert1) * tempConvert2))º")
                                 .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -559,7 +559,7 @@ struct Forecast: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 38.0)
                                     .foregroundColor(Color(.black))
-                                    .opacity(0.2)
+                                    .opacity(0.3)
                                     .shadow(color: Color(.gray), radius: 18)
                                 Text("Max Wind: \(Int(wsConverted)) \(windUnit)")
                                 .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -570,7 +570,7 @@ struct Forecast: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 38.0)
                                     .foregroundColor(Color(.black))
-                                    .opacity(0.2)
+                                    .opacity(0.3)
                                     .shadow(color: Color(.gray), radius: 18)
                                 Text("Chance Of Rain: \(nameResponse.chanceOfRain)%")
                                 .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -581,7 +581,7 @@ struct Forecast: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 38.0)
                                     .foregroundColor(Color(.black))
-                                    .opacity(0.2)
+                                    .opacity(0.3)
                                     .shadow(color: Color(.gray), radius: 18)
                                 Text("Chance Of Snow: \(nameResponse.chanceOfSnow)%")
                                 .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -591,11 +591,11 @@ struct Forecast: View {
                             .padding([.leading, .trailing])
                         }
                     VStack {
-                        Text("Tomorrow's Forecast")
+                        Text("Tomorrow")
                     .foregroundColor(.white)
-                    .font(.system(size: 27, weight: .semibold, design: .monospaced))
+                    .font(.system(size: 35, weight: .bold, design: .monospaced))
                     .multilineTextAlignment(.center)
-                    .shadow(color: .white, radius: 30)
+                    .shadow(color: .black, radius: 12)
                     .padding(.top)
                     .padding(.horizontal)
                         Group {
@@ -603,12 +603,12 @@ struct Forecast: View {
                                 .renderingMode(.original)
                                 .font(.system(size: 170))
                                 .foregroundColor(Color.white)
-                                .shadow(color: .gray, radius: 85)
+                                .shadow(color: .black, radius: 45)
                                 .padding(.trailing, 6)
                             ZStack {
                                 RoundedRectangle(cornerRadius: 38.0)
                                     .foregroundColor(Color(.black))
-                                    .opacity(0.2)
+                                    .opacity(0.3)
                                     .shadow(color: Color(.gray), radius: 18)
                                 Text("Min: \(Int((nameResponse.minTemp1 + tempConvert1) * tempConvert2))º Max: \(Int((nameResponse.maxTemp1 + tempConvert1) * tempConvert2))º")
                                 .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -619,7 +619,7 @@ struct Forecast: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 38.0)
                                         .foregroundColor(Color(.black))
-                                        .opacity(0.2)
+                                        .opacity(0.3)
                                         .shadow(color: Color(.gray), radius: 18)
                                     Text("Average Temp: \(Int((nameResponse.avgTemp1 + tempConvert1) * tempConvert2))º")
                                     .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -630,7 +630,7 @@ struct Forecast: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 38.0)
                                         .foregroundColor(Color(.black))
-                                        .opacity(0.2)
+                                        .opacity(0.3)
                                         .shadow(color: Color(.gray), radius: 18)
                                     Text("Max Wind: \(Int(wsConverted1)) \(windUnit)")
                                     .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -641,7 +641,7 @@ struct Forecast: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 38.0)
                                         .foregroundColor(Color(.black))
-                                        .opacity(0.2)
+                                        .opacity(0.3)
                                         .shadow(color: Color(.gray), radius: 18)
                                     Text("Chance Of Rain: \(nameResponse.chanceOfRain1)%")
                                     .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -652,7 +652,7 @@ struct Forecast: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 38.0)
                                         .foregroundColor(Color(.black))
-                                        .opacity(0.2)
+                                        .opacity(0.3)
                                         .shadow(color: Color(.gray), radius: 18)
                                     Text("Chance Of Snow: \(nameResponse.chanceOfSnow1)%")
                                     .font(.system(size: 25, weight: .medium, design: .monospaced))

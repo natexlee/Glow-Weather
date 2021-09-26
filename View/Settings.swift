@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Settings: View {
+    @EnvironmentObject var sharedUserInput: SharedUserInput
     var body: some View {
             NavigationView {
                 ZStack {
@@ -20,7 +21,8 @@ struct Settings: View {
                 .foregroundColor(.white)
                 .shadow(color: .gray, radius: 45)
                 .padding()
-            VStack {
+            //Spacer(minLength: 100)
+            //VStack {
                     NavigationLink(
                         destination: AboutTheApp(),
                         label: {
@@ -66,12 +68,44 @@ struct Settings: View {
                             }.frame(minWidth: 0, idealWidth: .infinity, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: 60, maxHeight: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                             .padding()
                         })
-                Spacer()
-        }.frame(minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealWidth: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-
-
-                    }
+                ZStack {
+                    RoundedRectangle(cornerRadius: 40)
+                        .foregroundColor(.black)
+                        .opacity(0.3)
+                        .shadow(color: .black, radius: 15)
+                VStack {
+                    Text("Temp Unit")
+                        .font(.system(size: 30, weight: .semibold, design: .monospaced))
+                        .foregroundColor(.white)
+                        .shadow(color: .black, radius: 15)
+                HStack {
+                    Text("")
+                        .padding()
+                VStack {
+                    Picker(selection: $sharedUserInput.userUnit, label: Text("Picker"), content: {
+                        Text("Fahrenheit").tag(1)
+                        Text("Celsius").tag(2)
+                    })
+                    
+                    .pickerStyle(SegmentedPickerStyle())
+                    .shadow(color: .blue, radius: 10)
                 }
+                    Text("")
+                        .padding()
+            }
+                }
+                }.padding()
+                .padding(.bottom, 60)
+                
+        }
+//            }.frame(minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealWidth: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
+//                .padding(.bottom, 150)
+             Spacer()
+        }
+        
+                    
+                //}
+              
             }
         }
     }

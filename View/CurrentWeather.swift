@@ -686,7 +686,7 @@ struct CurrentWeather: View {
                             .renderingMode(.original)
                             .font(.system(size: 170))
                             .foregroundColor(Color.white)
-                            .shadow(color: .gray, radius: 85)
+                            .shadow(color: .black, radius: 45)
                             .padding(.trailing, 6)
                         VStack {
                         Text("\(Int(tempToCelsius))º")
@@ -694,51 +694,47 @@ struct CurrentWeather: View {
                             .font(.system(size: 80, weight: .medium, design: .monospaced))
                             .shadow(color: .black, radius: 15)
                             .padding(.leading, 10)
-                        //}
-                   
-                        
-//                    Text("\(Int(tempToCelsius))º")
-//                        .foregroundColor(.white)
-//                        .font(.system(size: 70, weight: .semibold, design: .monospaced))
-//                        .shadow(color: .black, radius: 15)
-//                        .padding()
-                    }
+                        }.padding(0.5)
 //                    ZStack {
 //                        RoundedRectangle(cornerRadius: 38.0)
 //                            .foregroundColor(Color(.black))
 //                            .opacity(0.35)
 //                            .shadow(color: Color(.gray), radius: 18)
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 50)
+                                .foregroundColor(.black)
+                                .opacity(0.3)
                         Text("\(nameResponse.text)")
-                        .font(.system(size: 27, weight: .black, design: .monospaced))
+                        .font(.system(size: 32, weight: .semibold, design: .monospaced))
                         .foregroundColor(.white)
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                             .shadow(color: .black, radius: 15)
                             .padding()
+                        }.padding(.horizontal)
                     }
                         
-//                    }.frame(minWidth: 0, idealWidth: .infinity, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: 60, maxHeight: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-//                    .padding()
-                    HStack {
-                        Text("")
-                            .padding()
-                    VStack {
-                        Picker(selection: $sharedUserInput.userUnit, label: Text("Picker"), content: {
-                            Text("Fahrenheit").tag(1)
-                            Text("Celsius").tag(2)
-                        })
-                        
-                        .pickerStyle(SegmentedPickerStyle())
-                        .shadow(color: .blue, radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
-                    }
-                        Text("")
-                            .padding()
-                }
+
+//                    HStack {
+//                        Text("")
+//                            .padding()
+//                    VStack {
+//                        Picker(selection: $sharedUserInput.userUnit, label: Text("Picker"), content: {
+//                            Text("Fahrenheit").tag(1)
+//                            Text("Celsius").tag(2)
+//                        })
+//
+//                        .pickerStyle(SegmentedPickerStyle())
+//                        .shadow(color: .blue, radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+//                    }
+//                        Text("")
+//                            .padding()
+//                }
                     Group {
                         ZStack {
                             RoundedRectangle(cornerRadius: 38.0)
                                 .foregroundColor(Color(.black))
-                                .opacity(0.2)
+                                .opacity(0.3)
                                 .shadow(color: Color(.gray), radius: 18)
                         Text("Pressure: \(Int(pressureConverted)) hPa")
                             .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -750,7 +746,7 @@ struct CurrentWeather: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 38.0)
                                 .foregroundColor(Color(.black))
-                                .opacity(0.2)
+                                .opacity(0.3)
                                 .shadow(color: Color(.gray), radius: 18)
                         Text("Wind Speed: \(Int(wsConverted)) \(windUnit)")
                             .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -762,7 +758,7 @@ struct CurrentWeather: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 38.0)
                                 .foregroundColor(Color(.black))
-                                .opacity(0.2)
+                                .opacity(0.3)
                                 .shadow(color: Color(.gray), radius: 18)
                         Text("Feels Like: \(Int(feelsLikeToCelsius))º")
                             .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -774,7 +770,7 @@ struct CurrentWeather: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 38.0)
                                 .foregroundColor(Color(.black))
-                                .opacity(0.2)
+                                .opacity(0.3)
                                 .shadow(color: Color(.gray), radius: 18)
                         Text("Humidity: \(nameResponse.humidity)%")
                             .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -786,7 +782,7 @@ struct CurrentWeather: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 38.0)
                                 .foregroundColor(Color(.black))
-                                .opacity(0.2)
+                                .opacity(0.3)
                                 .shadow(color: Color(.gray), radius: 18)
                         Text("UV Index: \(nameResponse.uv)")
                             .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -798,7 +794,7 @@ struct CurrentWeather: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 38.0)
                                 .foregroundColor(Color(.black))
-                                .opacity(0.2)
+                                .opacity(0.3)
                                 .shadow(color: Color(.gray), radius: 18)
                         Text("Clouds: \(nameResponse.cloud)%")
                             .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -811,9 +807,9 @@ struct CurrentWeather: View {
                         if nameResponse.lat != 0.0000 && viewPicker == 1 {
                             Text("Air Quality")
                         .foregroundColor(.white)
-                        .font(.system(size: 38, weight: .semibold, design: .monospaced))
+                        .font(.system(size: 38, weight: .bold, design: .monospaced))
                         .multilineTextAlignment(.center)
-                        .shadow(color: .gray, radius: 30)
+                        .shadow(color: .black, radius: 15)
                         .padding(.top)
                         .padding(.horizontal)
                             if nameResponse.co != 0.0000000 {
