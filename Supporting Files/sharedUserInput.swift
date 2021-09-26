@@ -13,8 +13,8 @@ class SharedUserInput: ObservableObject {
     @Published var clName: String
     
     init(userUnit: Int, observedCityName: String, clName: String) {
-            self.userUnit = userUnit
-            self.observedCityName = observedCityName
-            self.clName = clName
-        }
+        self.userUnit = userUnit
+        self.observedCityName = observedCityName
+        self.clName = clName
+    }
 }

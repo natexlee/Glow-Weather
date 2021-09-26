@@ -32,7 +32,7 @@ extension LocationManager: CLLocationManagerDelegate {
         
         
         switch status {
-        
+            
         case .notDetermined:
             print("Not determinded")
         case .restricted:
@@ -44,7 +44,7 @@ extension LocationManager: CLLocationManagerDelegate {
         case .authorizedWhenInUse:
             print("Authorized when in use")
         @unknown default:
-           break
+            break
         }
         
         

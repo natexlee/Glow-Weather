@@ -101,14 +101,14 @@ class nameViewModel: ObservableObject {
         }
         return uv
     }
-
+    
     var co: Double {
         guard let co = nameSearchResponse?.current?.air_quality?.co else {
             return 0.0
         }
         return co
     }
-
+    
     var no2: Double {
         guard let no2 = nameSearchResponse?.current?.air_quality?.no2 else {
             return 0.0
@@ -287,13 +287,4 @@ class nameViewModel: ObservableObject {
     }
 }
 
-/*
-"http://api.weatherapi.com/v1/current.json?key=a84577bae9694076b76213117210108&q=\(cityInput.replacingOccurrences(of: " ", with: "_"))&aqi=yes&"
-*/
 
-/*
-http://api.weatherapi.com/v1/current.json?key=a84577bae9694076b76213117210108&q=\(cityInput.replacingOccurrences(of: " ", with: "_"))&aqi=yes
-*/
-
-
-//http://api.weatherapi.com/v1/forecast.json?key=a84577bae9694076b76213117210108&q=London&days=7&aqi=yes&alerts=no
