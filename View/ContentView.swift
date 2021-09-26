@@ -8,30 +8,38 @@
 import SwiftUI
 
 
+
         struct ContentView: View {
             @State var name = "Glowcast"
             @State var selected = "Current"
+            //@State var current = CurrentWeather()
+            @ObservedObject var nameResponse = nameViewModel()
+            @ObservedObject var locationSearch = locationSearchViewModel()
+            @ObservedObject var sharedUserInput = SharedUserInput(userUnit: 1, observedCityName: "", clName: "")
             
             var body: some View {
-                Home()
-                    
+                Home().environmentObject(sharedUserInput)
             }
         }
 
+    
 
         // tab-items
-        var tabItems = ["Weather", "Air Quality", "Settings"]
+        var tabItems = ["Current", "Forecast", "Settings"]
 
         struct Home : View {
-            @State var selected = "Weather"
+            
+            @State var selected = "Current"
             
             init() {
                 UITabBar.appearance().isHidden = true
            }
             
             @State var centerX : CGFloat = 0
+            @State private var selectedChoice = 1
             
             var body: some View {
+               
                 
                 
             VStack(spacing: 0) {
@@ -39,6 +47,7 @@ import SwiftUI
             CurrentWeather()
                 .tag(tabItems[0])
                 .ignoresSafeArea(.all, edges: .top)
+                //.animation(.easeInOut(duration: 0.45))
             Forecast()
                 .tag(tabItems[1])
                 .ignoresSafeArea(.all, edges: .top)
@@ -76,8 +85,7 @@ import SwiftUI
                 .background(Color.black.clipShape(AnimatedShape(centerX: centerX)))
                 .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: -5 )
                 .padding(.top,-15)
-                }
-            .ignoresSafeArea(.all, edges: .bottom)
+            }.ignoresSafeArea(.all, edges: .bottom)
             }
         }
 
@@ -146,4 +154,5 @@ import SwiftUI
                 }
             }
         }
+
 
