@@ -1,5 +1,9 @@
  # Glow-Weather
  Weather & air quality application created with a glow theme. This weather app uses APIs from weatherapi.com, and allows users to search the weather of their current location.
+ 
+ Contact:
+ officialnatelee@gmail.com
+ 
 
 ![IMG_0733](https://user-images.githubusercontent.com/77860839/134820008-c659c464-05f4-46d0-9956-a8fdacb9f1e3.PNG)
 ![IMG_0734](https://user-images.githubusercontent.com/77860839/134820026-d61f607b-2fda-4032-ba8f-566e5babe598.PNG)
