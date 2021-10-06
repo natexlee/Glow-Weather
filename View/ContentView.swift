@@ -14,9 +14,9 @@ struct ContentView: View {
     @State var selected = "Current"
     @ObservedObject var nameResponse = nameViewModel()
     @ObservedObject var sharedUserInput = SharedUserInput(userUnit: 1, observedCityName: "", clName: "")
-    
+    @ObservedObject var sharedForecast = SharedForecast(locationName: "", region: "", icon: 1, minTempToday: 1.0, maxTempToday: 1.0, avgTempToday: 1.0, maxWindToday: 1.0, chanceOfRainToday: 1, chanceOfSnowToday: 1, iconTmrw: 1, minTempTmrw: 1.0, maxTempTmrw: 1.0, avgTempTmrw: 1.0, maxWindTmrw: 1.0, chanceOfRainTmrw: 1, chanceOfSnowTmrw: 1, lastUpdated: "x")
     var body: some View {
-        Home().environmentObject(sharedUserInput)
+        Home().environmentObject(sharedUserInput).environmentObject(sharedForecast)
     }
 }
 
@@ -36,13 +36,11 @@ struct Home : View {
     @State var centerX : CGFloat = 0
     @State private var selectedChoice = 1
     
+    
     var body: some View {
         
         
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color(.blue), Color(.systemOrange)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .opacity(0.85)
-                .ignoresSafeArea()
             VStack(spacing: 0) {
                 TabView(selection: $selected){
                     CurrentWeather()

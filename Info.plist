@@ -37,7 +37,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Used to provide the user with relevant weather info</string>
+	<string>Enabling location services will help provide forecasts relevant to your current location</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

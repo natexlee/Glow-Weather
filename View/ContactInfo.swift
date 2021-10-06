@@ -11,14 +11,12 @@ struct ContactInfo: View {
     var body: some View {
         VStack {
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [Color(.blue), Color(.systemOrange)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                    .opacity(0.85)
-                    .ignoresSafeArea()
+                Color.gray.ignoresSafeArea().opacity(0.9)
                 VStack {
                     Text("Contact")
                         .font(.system(size: 55, weight: .semibold, design: .monospaced))
                         .foregroundColor(.white)
-                        .shadow(color: .gray, radius: 45)
+                        .shadow(color: .black, radius: 30)
                         .padding()
                     ScrollView(.vertical, showsIndicators: false) {
                         Spacer(minLength: 25)

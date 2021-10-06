@@ -19,10 +19,11 @@ struct CurrentWeather: View {
     @ObservedObject private var locationXManager = LocationManager()
     @ObservedObject var nameResponse = nameViewModel()
     @State var searchLX = ""
-    @State var viewPicker = 1
+    @State var viewPicker = 2
     @EnvironmentObject var sharedUserInput: SharedUserInput
+    @EnvironmentObject var sharedForecast: SharedForecast
     
-    
+    // Converts current temp to celsius
     var tempToCelsius: Double {
         if sharedUserInput.userUnit == 1 {
             return nameResponse.temp_f
@@ -31,7 +32,7 @@ struct CurrentWeather: View {
         }
     }
     
-    
+    // Current feels-like to celsius
     var feelsLikeToCelsius: Double {
         if sharedUserInput.userUnit == 1 {
             return nameResponse.feelslike_f
@@ -40,6 +41,7 @@ struct CurrentWeather: View {
         }
     }
     
+    // Converts wind speed from mph to kph
     var wsConverted: Double {
         if sharedUserInput.userUnit == 1 {
             return nameResponse.wind_mph
@@ -48,6 +50,7 @@ struct CurrentWeather: View {
         }
     }
     
+    // switches mph/kph label for wind speed
     var windUnit: String {
         if sharedUserInput.userUnit == 1 {
             return "MPH"
@@ -56,15 +59,13 @@ struct CurrentWeather: View {
         }
     }
     
-    
+    // Converts in to hpa
     var pressureConverted: Double {
         return nameResponse.pressure_in * 33.86
     }
     
-    var pressureConvertedX: Double {
-        return nameResponse.pressure_in * 33.86
-    }
     
+    // Current weather icon
     var iconImage: String {
         switch nameResponse.code {
         case 1000: return "sun.max.fill"
@@ -86,7 +87,12 @@ struct CurrentWeather: View {
         }
     }
     
+    // User defaults
+    let defaults = UserDefaults.standard
     
+    func persistData() {
+        defaults.set(sharedUserInput.observedCityName, forKey: "persistName")
+    }
     
     
     var body: some View {
@@ -98,23 +104,26 @@ struct CurrentWeather: View {
         
         let coordinates = "\(coordinate.latitude),\(coordinate.longitude)"
         
+        let persistName = defaults.string(forKey: "persistName")
+        
+        
         //Location Request Test
         
         ZStack {
-            
-            LinearGradient(gradient: Gradient(colors: [Color(.blue), Color(.systemOrange)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .opacity(0.85)
-                .ignoresSafeArea()
-            
             ScrollView(.vertical, showsIndicators: false) {
+                
+                let nameFetch: () = self.nameResponse.fetchData(cityInput: sharedUserInput.observedCityName)
                 //                let latitudes = coordinate.latitude
                 //                let longitudes = coordinate.longitude
                 
                 VStack {
                     HStack {
                         Button(action: {
-                            viewPicker = 1
+                            defaults.set(cityInput, forKey: "persistName")
+                            let persistName = defaults.string(forKey: "persistName")
+                            cityInput = persistName ?? ""
                             hideKeyboard()
+                            sharedForecast.minTempToday = nameResponse.minTempToday
                             sharedUserInput.observedCityName = cityInput
                             self.nameResponse.fetchData(cityInput: sharedUserInput.observedCityName)
                         }, label: {
@@ -126,10 +135,13 @@ struct CurrentWeather: View {
                         })
                         ZStack {
                             TextField("Search City", text: $cityInput, onCommit: {
+                                defaults.set(cityInput, forKey: "persistName")
+                                let persistName = defaults.string(forKey: "persistName")
+                                cityInput = persistName ?? ""
                                 viewPicker = 1
                                 hideKeyboard()
                                 sharedUserInput.observedCityName = cityInput
-                                self.nameResponse.fetchData(cityInput: sharedUserInput.observedCityName)
+                                nameFetch
                             }).extensionTextFieldView(roundedCornes: 38, startColor: .white, endColor: Color("GradientColorBlue"))
                                 .preferredColorScheme(.light)
                                 .font(.system(size: 20, weight: .semibold, design: .monospaced))
@@ -138,6 +150,9 @@ struct CurrentWeather: View {
                             HStack {
                                 Spacer()
                                 Button(action: {
+                                    defaults.set(coordinates, forKey: "persistName")
+                                    let persistName = defaults.string(forKey: "persistName")
+                                    let coordinates = persistName ?? ""
                                     hideKeyboard()
                                     viewPicker = 1
                                     sharedUserInput.observedCityName = coordinates
@@ -151,12 +166,13 @@ struct CurrentWeather: View {
                                 }).padding()
                             }
                         }
-                    }.padding(.top, 30).onAppear(perform: {
-                        LocationManager.shared.requestLocation()
-                    })
+                    }.padding(.top, 30)
+                        .onAppear(perform: {
+                            LocationManager.shared.requestLocation()
+                        })
                     
                     //Prompt displayed when no data is available
-                    if nameResponse.lat == 0.0000 {
+                    if sharedUserInput.observedCityName == "" && viewPicker == 2 {
                         VStack {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 25)
@@ -177,14 +193,20 @@ struct CurrentWeather: View {
                                 .padding(.top, 65)
                                 .padding(.horizontal, 25)
                                 .onTapGesture {
+                                    defaults.set(coordinates, forKey: "persistName")
+                                    let persistName = defaults.string(forKey: "persistName")
+                                    let coordinates = persistName ?? ""
+                                    hideKeyboard()
                                     viewPicker = 1
                                     sharedUserInput.observedCityName = coordinates
-                                    self.nameResponse.fetchData(cityInput: sharedUserInput.observedCityName)
+                                    self.nameResponse.fetchData(cityInput: coordinates)
                                 }
                         }
                     }
                     
-                    if nameResponse.lat != 0.0000 && viewPicker == 1 {
+                    
+                    
+                    if nameResponse.lat != 0.0000 {
                         VStack {
                             Text("\(nameResponse.name)")
                                 .foregroundColor(.white)
@@ -194,6 +216,27 @@ struct CurrentWeather: View {
                                 .padding(.top)
                                 .padding(.horizontal)
                                 .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                                .onAppear {
+                                    // Current forecast
+                                    sharedForecast.locationName = nameResponse.name
+                                    sharedForecast.region = nameResponse.region
+                                    sharedForecast.icon = nameResponse.code
+                                    sharedForecast.minTempToday = nameResponse.minTempToday
+                                    sharedForecast.maxTempToday = nameResponse.maxTempToday
+                                    sharedForecast.avgTempToday = nameResponse.avgTempToday
+                                    sharedForecast.maxWindToday = nameResponse.maxWindToday
+                                    sharedForecast.chanceOfRainToday = nameResponse.chanceOfRainToday
+                                    sharedForecast.chanceOfSnowToday = nameResponse.chanceOfSnowToday
+                                    //Forecast for tmrw
+                                    sharedForecast.iconTmrw = nameResponse.codeTmrw
+                                    sharedForecast.minTempTmrw = nameResponse.minTempTmrw
+                                    sharedForecast.maxTempTmrw = nameResponse.maxTempTmrw
+                                    sharedForecast.avgTempTmrw = nameResponse.avgTempTmrw
+                                    sharedForecast.maxWindTmrw = nameResponse.maxWindTmrw
+                                    sharedForecast.chanceOfRainTmrw = nameResponse.chanceOfRainTmrw
+                                    sharedForecast.chanceOfSnowTmrw = nameResponse.chanceOfSnowTmrw
+                                    sharedForecast.lastUpdated = nameResponse.localtime
+                                }
                             Text("\(nameResponse.region)")
                                 .foregroundColor(.white)
                                 .font(.system(size: 18, weight: .semibold, design: .monospaced))
@@ -207,6 +250,9 @@ struct CurrentWeather: View {
                                 .foregroundColor(Color.white)
                                 .shadow(color: .black, radius: 45)
                                 .padding(.trailing, 6)
+                                .onAppear {
+                                    sharedForecast.minTempToday = nameResponse.minTempToday
+                                }
                             VStack {
                                 Text("\(Int(tempToCelsius))º")
                                     .foregroundColor(.white)
@@ -217,7 +263,7 @@ struct CurrentWeather: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 50)
                                     .foregroundColor(.black)
-                                    .opacity(0.3)
+                                    .opacity(0.45)
                                 Text("\(nameResponse.text)")
                                     .font(.system(size: 32, weight: .semibold, design: .monospaced))
                                     .foregroundColor(.white)
@@ -227,11 +273,12 @@ struct CurrentWeather: View {
                                     .padding()
                             }.padding(.horizontal)
                         }
+                        
                         Group {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 38.0)
                                     .foregroundColor(Color(.black))
-                                    .opacity(0.3)
+                                    .opacity(0.45)
                                     .shadow(color: Color(.gray), radius: 18)
                                 Text("Pressure: \(Int(pressureConverted)) hPa")
                                     .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -243,7 +290,7 @@ struct CurrentWeather: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 38.0)
                                     .foregroundColor(Color(.black))
-                                    .opacity(0.3)
+                                    .opacity(0.45)
                                     .shadow(color: Color(.gray), radius: 18)
                                 Text("Wind Speed: \(Int(wsConverted)) \(windUnit)")
                                     .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -255,7 +302,7 @@ struct CurrentWeather: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 38.0)
                                     .foregroundColor(Color(.black))
-                                    .opacity(0.3)
+                                    .opacity(0.45)
                                     .shadow(color: Color(.gray), radius: 18)
                                 Text("Feels Like: \(Int(feelsLikeToCelsius))º")
                                     .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -267,7 +314,7 @@ struct CurrentWeather: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 38.0)
                                     .foregroundColor(Color(.black))
-                                    .opacity(0.3)
+                                    .opacity(0.45)
                                     .shadow(color: Color(.gray), radius: 18)
                                 Text("Humidity: \(nameResponse.humidity)%")
                                     .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -279,7 +326,7 @@ struct CurrentWeather: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 38.0)
                                     .foregroundColor(Color(.black))
-                                    .opacity(0.3)
+                                    .opacity(0.45)
                                     .shadow(color: Color(.gray), radius: 18)
                                 Text("UV Index: \(nameResponse.uv)")
                                     .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -291,7 +338,7 @@ struct CurrentWeather: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 38.0)
                                     .foregroundColor(Color(.black))
-                                    .opacity(0.3)
+                                    .opacity(0.45)
                                     .shadow(color: Color(.gray), radius: 18)
                                 Text("Clouds: \(nameResponse.cloud)%")
                                     .font(.system(size: 25, weight: .medium, design: .monospaced))
@@ -301,7 +348,10 @@ struct CurrentWeather: View {
                                 .padding(0.2)
                                 .padding([.leading, .trailing])
                             
-                            if nameResponse.lat != 0.0000 && viewPicker == 1 {
+                            
+                            // Displays air quality data
+                            
+                            if nameResponse.lat != 0.0000 {
                                 Text("Air Quality")
                                     .foregroundColor(.white)
                                     .font(.system(size: 38, weight: .bold, design: .monospaced))
@@ -316,17 +366,17 @@ struct CurrentWeather: View {
                                         if 0.0...5263.69 ~= nameResponse.co  {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightGreen"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         } else if 5263.70...11185.93 ~= nameResponse.co {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightYellow"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         } else {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightRed"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         }
                                         
@@ -347,17 +397,17 @@ struct CurrentWeather: View {
                                         if 0...151 ~= nameResponse.no2  {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightGreen"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         } else if 152...205 ~= nameResponse.no2 {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightYellow"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         } else {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightRed"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         }
                                         
@@ -379,17 +429,17 @@ struct CurrentWeather: View {
                                         if 0...116 ~= nameResponse.o3  {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightGreen"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         } else if 117...150 ~= nameResponse.o3 {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightYellow"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         } else {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightRed"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         }
                                         
@@ -411,17 +461,17 @@ struct CurrentWeather: View {
                                         if 0...99 ~= nameResponse.so2  {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightGreen"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         } else if 100...214 ~= nameResponse.so2 {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightYellow"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         } else {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightRed"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         }
                                         
@@ -443,17 +493,17 @@ struct CurrentWeather: View {
                                         if 0.0...12.0 ~= nameResponse.pm2_5  {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightGreen"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         } else if 12.1...35.4 ~= nameResponse.pm2_5 {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightYellow"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         } else {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightRed"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         }
                                         
@@ -475,17 +525,17 @@ struct CurrentWeather: View {
                                         if 0...54.0 ~= nameResponse.pm10  {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightGreen"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         } else if 55.0...154.0 ~= nameResponse.pm10 {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightYellow"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         } else {
                                             RoundedRectangle(cornerRadius: 38.0)
                                                 .foregroundColor(Color("customLightRed"))
-                                                .opacity(0.6)
+                                                .opacity(0.85)
                                                 .shadow(color: Color(.black), radius: 12)
                                         }
                                         
@@ -501,14 +551,14 @@ struct CurrentWeather: View {
                                         .padding([.leading, .trailing])
                                 }
                                 Text("Updated: \(nameResponse.localtime)")
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.gray)
                                     .font(.system(size: 15, weight: .semibold, design: .monospaced))
                                     .shadow(color: .black, radius: 15)
                                     .padding()
                             }
                         }
                     }
-                }
+                }.animation(.easeInOut(duration: 0.5))
                 Spacer()
                 
             }
@@ -516,18 +566,21 @@ struct CurrentWeather: View {
             
         }.frame(minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealWidth: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             .onAppear(perform: {
-                
+                sharedUserInput.observedCityName = persistName ?? ""
                 if sharedUserInput.observedCityName != "" {
-                    viewPicker = 1
                     self.nameResponse.fetchData(cityInput: sharedUserInput.observedCityName)
                 } else {
-                    viewPicker = 1
                     self.nameResponse.fetchData(cityInput: sharedUserInput.clName)
                 }
             })
             .preferredColorScheme(.light)
+            .background(
+                LinearGradient(gradient: Gradient(colors: [.blue, .white]), startPoint: .top, endPoint: .bottom)
+            )
     }
 }
+
+
 
 
 
@@ -540,9 +593,8 @@ func hideKeyboard() {
 }
 
 
-
+// Search bar appearance extension
 extension TextField {
-    
     func extensionTextFieldView(roundedCornes: CGFloat, startColor: Color,  endColor: Color) -> some View {
         self
             .padding()

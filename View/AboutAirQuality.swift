@@ -10,15 +10,12 @@ import SwiftUI
 struct AboutAirQuality: View {
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color(.blue), Color(.systemOrange)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .opacity(0.85)
-                .ignoresSafeArea()
-            
+            Color.gray.ignoresSafeArea().opacity(0.9)
             VStack(alignment: .center) {
                 Text("Air Quality")
                     .font(.system(size: 55, weight: .semibold, design: .monospaced))
                     .foregroundColor(.white)
-                    .shadow(color: .white, radius: 45)
+                    .shadow(color: .black, radius: 30)
                     .padding()
                 ScrollView(.vertical, showsIndicators: false) {
                     Spacer(minLength: 25)

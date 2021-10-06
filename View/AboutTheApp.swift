@@ -10,20 +10,17 @@ import SwiftUI
 struct AboutTheApp: View {
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color(.blue), Color(.systemOrange)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .opacity(0.85)
-                .ignoresSafeArea()
+            Color.gray.ignoresSafeArea().opacity(0.9)
             VStack {
                 Text("About")
                     .font(.system(size: 55, weight: .semibold, design: .monospaced))
                     .foregroundColor(.white)
-                    .shadow(color: .gray, radius: 45)
+                    .shadow(color: .black, radius: 30)
                     .padding()
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
                         Spacer(minLength: 120)
                         ZStack {
-                            
                             RoundedRectangle(cornerRadius: 25)
                                 .foregroundColor(.black)
                                 .opacity(0.4)

@@ -144,12 +144,12 @@ class nameViewModel: ObservableObject {
         return pm10
     }
     
-    var usEpa: Int {
-        guard let usEpa = nameSearchResponse?.current?.air_quality?.usEpa else {
-            return 0
-        }
-        return usEpa
-    }
+    //    var usEpa: Int {
+    //        guard let usEpa = nameSearchResponse?.current?.air_quality?.usEpa else {
+    //            return 0
+    //        }
+    //        return usEpa
+    //    }
     
     var text: String {
         guard let text = nameSearchResponse?.current?.condition?.text  else {
@@ -165,109 +165,109 @@ class nameViewModel: ObservableObject {
         return dailyDate
     }
     
-    var maxTemp: Double {
-        guard let maxTemp = nameSearchResponse?.forecast?.forecastday?[0].day?.maxtemp_f else {
+    var maxTempToday: Double {
+        guard let maxTempToday = nameSearchResponse?.forecast?.forecastday?[0].day?.maxtemp_f else {
             return 0.0
         }
-        return maxTemp
+        return maxTempToday
     }
     
-    var minTemp: Double {
-        guard let minTemp = nameSearchResponse?.forecast?.forecastday?[0].day?.mintemp_f else {
+    var minTempToday: Double {
+        guard let minTempToday = nameSearchResponse?.forecast?.forecastday?[0].day?.mintemp_f else {
             return 0.0
         }
-        return minTemp
+        return minTempToday
     }
     
-    var avgTemp: Double {
-        guard let avgTemp = nameSearchResponse?.forecast?.forecastday?[0].day?.avgtemp_f else {
+    var avgTempToday: Double {
+        guard let avgTempToday = nameSearchResponse?.forecast?.forecastday?[0].day?.avgtemp_f else {
             return 0.0
         }
-        return avgTemp
+        return avgTempToday
     }
     
-    var maxWind: Double {
-        guard let maxWind = nameSearchResponse?.forecast?.forecastday?[0].day?.maxwind_mph else {
+    var maxWindToday: Double {
+        guard let maxWindToday = nameSearchResponse?.forecast?.forecastday?[0].day?.maxwind_mph else {
             return 0.0
         }
-        return maxWind
+        return maxWindToday
     }
     
-    var avgHumidity: Int {
-        guard let avgHumidity = nameSearchResponse?.forecast?.forecastday?[0].day?.avghumidity else {
+    var avgHumidityToday: Int {
+        guard let avgHumidityToday = nameSearchResponse?.forecast?.forecastday?[0].day?.avghumidity else {
             return 0
         }
-        return avgHumidity
+        return avgHumidityToday
     }
     
-    var chanceOfRain: Int {
-        guard let chanceOfRain = nameSearchResponse?.forecast?.forecastday?[0].day?.daily_chance_of_rain else {
+    var chanceOfRainToday: Int {
+        guard let chanceOfRainToday = nameSearchResponse?.forecast?.forecastday?[0].day?.daily_chance_of_rain else {
             return 0
         }
-        return chanceOfRain
+        return chanceOfRainToday
     }
     
-    var chanceOfSnow: Int {
-        guard let chanceOfSnow = nameSearchResponse?.forecast?.forecastday?[0].day?.daily_chance_of_snow else {
+    var chanceOfSnowToday: Int {
+        guard let chanceOfSnowToday = nameSearchResponse?.forecast?.forecastday?[0].day?.daily_chance_of_snow else {
             return 0
         }
-        return chanceOfSnow
+        return chanceOfSnowToday
     }
     
-    var minTemp1: Double {
-        guard let minTemp1 = nameSearchResponse?.forecast?.forecastday?[1].day?.mintemp_f else {
+    var minTempTmrw: Double {
+        guard let minTempTmrw = nameSearchResponse?.forecast?.forecastday?[1].day?.mintemp_f else {
             return 0.0
         }
-        return minTemp1
+        return minTempTmrw
     }
     
-    var maxTemp1: Double {
-        guard let maxTemp1 = nameSearchResponse?.forecast?.forecastday?[1].day?.maxtemp_f else {
+    var maxTempTmrw: Double {
+        guard let maxTempTmrw = nameSearchResponse?.forecast?.forecastday?[1].day?.maxtemp_f else {
             return 0.0
         }
-        return maxTemp1
+        return maxTempTmrw
     }
     
-    var code1: Int {
-        guard let code1 = nameSearchResponse?.forecast?.forecastday?[1].hour?[12].condition?.code else {
+    var codeTmrw: Int {
+        guard let codeTmrw = nameSearchResponse?.forecast?.forecastday?[1].hour?[12].condition?.code else {
             return 0
         }
-        return code1
+        return codeTmrw
     }
     
-    var avgTemp1: Double {
-        guard let avgTemp1 = nameSearchResponse?.forecast?.forecastday?[1].day?.avgtemp_f else {
+    var avgTempTmrw: Double {
+        guard let avgTempTmrw = nameSearchResponse?.forecast?.forecastday?[1].day?.avgtemp_f else {
             return 0.0
         }
-        return avgTemp1
+        return avgTempTmrw
     }
     
-    var maxWind1: Double {
-        guard let maxWind1 = nameSearchResponse?.forecast?.forecastday?[1].day?.maxwind_mph else {
+    var maxWindTmrw: Double {
+        guard let maxWindTmrw = nameSearchResponse?.forecast?.forecastday?[1].day?.maxwind_mph else {
             return 0.0
         }
-        return maxWind1
+        return maxWindTmrw
     }
     
-    var avgHumidity1: Int {
-        guard let avgHumidity1 = nameSearchResponse?.forecast?.forecastday?[1].day?.avghumidity else {
+    var avgHumidityTmrw: Int {
+        guard let avgHumidityTmrw = nameSearchResponse?.forecast?.forecastday?[1].day?.avghumidity else {
             return 0
         }
-        return avgHumidity1
+        return avgHumidityTmrw
     }
     
-    var chanceOfRain1: Int {
-        guard let chanceOfRain1 = nameSearchResponse?.forecast?.forecastday?[1].day?.daily_chance_of_rain else {
+    var chanceOfRainTmrw: Int {
+        guard let chanceOfRainTmrw = nameSearchResponse?.forecast?.forecastday?[1].day?.daily_chance_of_rain else {
             return 0
         }
-        return chanceOfRain1
+        return chanceOfRainTmrw
     }
     
-    var chanceOfSnow1: Int {
-        guard let chanceOfSnow1 = nameSearchResponse?.forecast?.forecastday?[1].day?.daily_chance_of_snow else {
+    var chanceOfSnowTmrw: Int {
+        guard let chanceOfSnowTmrw = nameSearchResponse?.forecast?.forecastday?[1].day?.daily_chance_of_snow else {
             return 0
         }
-        return chanceOfSnow1
+        return chanceOfSnowTmrw
     }
     
     func fetchData(cityInput: String) {
