@@ -349,19 +349,47 @@ struct CurrentWeather: View {
                                 .padding([.leading, .trailing])
                             
                             
+                        
                             // Displays air quality data
                             
                             if nameResponse.lat != 0.0000 {
-                                Text("Air Quality")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 38, weight: .bold, design: .monospaced))
-                                    .multilineTextAlignment(.center)
-                                    .shadow(color: .black, radius: 15)
-                                    .padding(.top)
-                                    .padding(.horizontal)
+
+                 
+                       
+                                        Text("Air Quality")
+                                                 .foregroundColor(.white)
+                                                 .font(.system(size: 38, weight: .bold, design: .monospaced))
+                                                 .multilineTextAlignment(.center)
+                                                 .shadow(color: .black, radius: 15)
+                                                 .padding(.top)
+                                                 .padding(.horizontal)
+                                    
+
+                                    
+                                             
+                                
+                                
+//                                   Text("Air Quality")
+//                                            .foregroundColor(.white)
+//                                            .font(.system(size: 38, weight: .bold, design: .monospaced))
+//                                            .multilineTextAlignment(.center)
+//                                            .shadow(color: .black, radius: 15)
+//                                            .padding(.top)
+//                                            .padding(.horizontal)
+                               
+                                
+//                                Text("Air Quality")
+//                                    .foregroundColor(.white)
+//                                    .font(.system(size: 38, weight: .bold, design: .monospaced))
+//                                    .multilineTextAlignment(.center)
+//                                    .shadow(color: .black, radius: 15)
+//                                    .padding(.top)
+//                                    .padding(.horizontal)
                                 
                                 if nameResponse.co != 0.0000000 {
+                                    
                                     // Carbon Monoxide
+                                   
                                     ZStack {
                                         if 0.0...5263.69 ~= nameResponse.co  {
                                             RoundedRectangle(cornerRadius: 38.0)
@@ -381,7 +409,7 @@ struct CurrentWeather: View {
                                         }
                                         
                                         HStack {
-                                            Text("Co: \(nameResponse.co, specifier: "%.2f") µg/m3")
+                                            Text("Carbon Monoxide")
                                                 .foregroundColor(.black)
                                                 .font(.system(size: 25, weight: .semibold, design: .monospaced))
                                                 .shadow(color: .white, radius: 15)
@@ -390,7 +418,7 @@ struct CurrentWeather: View {
                                     }.frame(minWidth: 0, idealWidth: .infinity, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: 60, maxHeight: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                         .padding(0.2)
                                         .padding([.leading, .trailing])
-                                    
+                                
                                     // No2
                                     
                                     ZStack {
@@ -412,7 +440,7 @@ struct CurrentWeather: View {
                                         }
                                         
                                         HStack {
-                                            Text("No2: \(nameResponse.no2, specifier: "%.2f") µg/m3")
+                                            Text("Nitrogen dioxide")
                                                 .foregroundColor(.black)
                                                 .font(.system(size: 25, weight: .semibold, design: .monospaced))
                                                 .shadow(color: .white, radius: 15)
@@ -444,7 +472,7 @@ struct CurrentWeather: View {
                                         }
                                         
                                         HStack {
-                                            Text("o3: \(nameResponse.o3, specifier: "%.2f") µg/m3")
+                                            Text("Trioxygen (Ozone)")
                                                 .foregroundColor(.black)
                                                 .font(.system(size: 25, weight: .semibold, design: .monospaced))
                                                 .shadow(color: .white, radius: 15)
@@ -476,7 +504,7 @@ struct CurrentWeather: View {
                                         }
                                         
                                         HStack {
-                                            Text("So2: \(nameResponse.so2, specifier: "%.2f") µg/m3")
+                                            Text("Sulfur Dioxide")
                                                 .foregroundColor(.black)
                                                 .font(.system(size: 25, weight: .semibold, design: .monospaced))
                                                 .shadow(color: .white, radius: 15)
@@ -508,7 +536,7 @@ struct CurrentWeather: View {
                                         }
                                         
                                         HStack {
-                                            Text("Pm(2.5): \(nameResponse.pm2_5, specifier: "%.2f") µg/m3")
+                                            Text("Particulates (2.5 µg)")
                                                 .foregroundColor(.black)
                                                 .font(.system(size: 25, weight: .semibold, design: .monospaced))
                                                 .shadow(color: .white, radius: 15)
@@ -540,7 +568,7 @@ struct CurrentWeather: View {
                                         }
                                         
                                         HStack {
-                                            Text("Pm(10): \(nameResponse.pm10, specifier: "%.2f") µg/m3")
+                                            Text("Particulates (10 µg)")
                                                 .foregroundColor(.black)
                                                 .font(.system(size: 25, weight: .semibold, design: .monospaced))
                                                 .shadow(color: .white, radius: 15)
@@ -556,6 +584,7 @@ struct CurrentWeather: View {
                                     .shadow(color: .black, radius: 15)
                                     .padding()
                             }
+                            
                         }
                     }
                 }.animation(.easeInOut(duration: 0.5))
